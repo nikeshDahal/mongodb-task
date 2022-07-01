@@ -10,7 +10,11 @@ require("./db/mongoose"); //for db connection
 //routes
 const userRouter = require("./routers/userRouter");
 const postRouter = require("./routers/postRouter");
-// const commentRouter = require("./routers/commentsRouter");
+const commentRouter = require("./routers/commentsRouter");
+const replyRouter = require("./routers/replyRouter");
+
+
+
 
 
 //middlewares
@@ -21,7 +25,9 @@ app.use(express.json());
 
 
 app.use("/user",userRouter);
-// app.use("/post",postRouter);
+app.use("/post",postRouter);
+app.use("/comment",commentRouter);
+app.use("/reply",replyRouter);
 
 
 

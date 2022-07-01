@@ -10,6 +10,10 @@ const locationSchema = new mongoose.Schema({
       enum: ['Point'],
       required: true
     },
+    address:{
+      type:String,
+      required:true
+    },
     coordinates: {
       type: [Number],
       required: true
@@ -36,6 +40,15 @@ const postSchema = new mongoose.Schema({
     },
     location:locationSchema
 })
+
+
+postSchema.statics.listAllPost= async function(){
+  try {
+    return this.find({});
+  } catch (error) {
+    throw error
+  }
+}
 
 const Post = mongoose.model("Posts", postSchema);
 module.exports = Post;

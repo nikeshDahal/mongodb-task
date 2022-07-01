@@ -1,9 +1,11 @@
-// const express = require("express");
-// const postController = require("../controllers/postController");
+const express = require("express");
+const auth = require("../middlewares/auth");
+const postController = require("../controllers/postController");
 
-// const postRouter = new express.Router();
+const postRouter = new express.Router();
 
 
 
-// postRouter.post("/",postController.createPost);
-// module.exports = postRouter;
+postRouter.post("/",auth,postController.createPost);
+postRouter.get("/listAll",postController.listAllPost);
+module.exports = postRouter;
