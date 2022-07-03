@@ -26,7 +26,7 @@ const createPost = async(req,res)=>{
 
 const listAllPost= async(req,res)=>{
     try {
-        const posts = await Post.listAllPost();
+        const posts = await Post.listAllPosts();
         return res.status(200).send({posts});
     } catch (error) {
         return res.status(400).send({
