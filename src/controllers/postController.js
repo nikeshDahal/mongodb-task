@@ -1,11 +1,9 @@
 // const { create } = require("../models/posts");
 const Post = require("../models/posts");
 
-
 //.............creating post by user..................//
 const createPost = async(req,res)=>{
     try {
-
         const { title, content, location } = req.body;
         const postedBy=req.user._id;
         const post = new Post ({
@@ -23,6 +21,7 @@ const createPost = async(req,res)=>{
       }
 }
 
+//............................controller for fetching all post including post , post ownser, comment and replies..............//
 
 const listAllPost= async(req,res)=>{
     try {
@@ -35,7 +34,21 @@ const listAllPost= async(req,res)=>{
     }
 }
 
+//............................controller for fetching all post within 600 metere distance from my location..........................//
+const postNearMe= async(req,res)=>{
+    try {
+        const posts = await Post.listAllPostsNearMe(req.user.location.coordinates);
+        return res.status(200).send({posts});
+    } catch (error) {
+        console.log(error)
+        // return res.status(400).send({
+        //     error_message:{message:"failed to fetch posts"}
+        //  });
+    }
+}
+
 module.exports={
     createPost,
-    listAllPost
+    listAllPost,
+    postNearMe
 }

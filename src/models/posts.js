@@ -43,6 +43,8 @@ const postSchema = new mongoose.Schema(
   }
 );
 
+
+//............................fetching all posts with post owner details, comments, replies.................//
 postSchema.statics.listAllPosts = async function () {
   try {
     return this.aggregate([
@@ -132,21 +134,7 @@ postSchema.statics.listAllPosts = async function () {
           as: "comments",
         },
       },
-
-    //.......to link replies...........
-      // {
-      //   $lookup:{
-      //     from:"replies",
-      //     let:{comment_Id:"$_id"},
-      //     pipeline:[
-      //       {
-      //         $match: { $expr: { $and: [{ $eq: ["$commentId", "$$comment_Id"] }] } }
-      //       }
-      //     ],
-      //     as:"replies"
-      //   }
-      // },
-
+      
       {
         $project: {
           _id: 0,
@@ -159,6 +147,32 @@ postSchema.statics.listAllPosts = async function () {
         $limit: 10,
       },
     ]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+//.............................fetching all post within 600m from my location.................................//
+
+postSchema.statics.listAllPostsNearMe = async function (cords) {
+  try {
+    console.log('cords',cords)
+    return this.aggregate([
+      {
+        $geoNear:{
+          near:{
+            type:"Point",
+            coordinates:cords
+          },
+          key:"location",
+          maxDistance:600,
+          distanceField:"dist.distanceFromMyLocation",
+          spherical:true
+        }
+      }
+
+    ])
   } catch (error) {
     throw error;
   }
