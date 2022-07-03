@@ -13,7 +13,8 @@ const createReply= async(req,res)=>{
         return res.status(200).send({replyDb});  
     } catch (error) {
         res.status(400).send({
-            error_message:"failed to post a comment"
+            status:false,
+            message:"failed to post a comment"
         });
     }
 }

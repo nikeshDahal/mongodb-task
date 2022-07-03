@@ -80,7 +80,7 @@ postSchema.statics.listAllPosts = async function () {
           as: "postedBy",
         },
       }, //validation ended
-
+      //stage 2 for sorting the posts on the basis of date
       {
         $sort: {
           createdAt: -1,
@@ -88,7 +88,7 @@ postSchema.statics.listAllPosts = async function () {
       },
 
       {
-        //stage2 to get comment  details
+        //stage3 to get comment  details
         $lookup: {
           from: "comments",
           let: { /*new variable*/post_Id: "$_id"/*id in postable*/ },
@@ -134,7 +134,7 @@ postSchema.statics.listAllPosts = async function () {
           as: "comments",
         },
       },
-      
+      //stage 4 for projection 
       {
         $project: {
           _id: 0,
@@ -166,7 +166,7 @@ postSchema.statics.listAllPostsNearMe = async function (cords) {
             coordinates:cords
           },
           key:"location",
-          maxDistance:600,
+          maxDistance:2000,
           distanceField:"dist.distanceFromMyLocation",
           spherical:true
         }

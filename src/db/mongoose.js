@@ -6,5 +6,4 @@ mongoose.connect(process.env.MONGODB_KEY,(err)=>{
             "message":"error in connecting server"
         })
     }
-
 });

@@ -12,12 +12,13 @@ const auth =async(req,res,next)=>{
        }
        req.token = token;
        req.user = foundUser;
-    //    const allUsers=await User.find({});
-    //    req.users = allUsers;
        console.log('middlewares.....')
         next();
     } catch (error) {
-        res.status(401).send('plz authenticate');  
+        res.status(401).send({
+            sucess:false,
+            message:"plz authenticate"
+        });  
     }
 }
 module.exports=auth;

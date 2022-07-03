@@ -17,6 +17,7 @@ const addUser = async (req, res) => {
     res.status(200).send({ user,tokens});
   } catch (error) {
     res.status(400).send({
+      status:false,
       message:"failed to create user"
     });
   }
@@ -30,7 +31,8 @@ const loginUser = async(req,res)=>{
     res.status(201).send({user,tokens});
 } catch (error) {
     res.status(400).send({
-    error:"unable to get user"
+      status:false,
+      message:"failed to login"
     })
 }
 }
@@ -43,9 +45,10 @@ const logoutUser = async(req,res)=>{
       return iteratingToken.token !== req.token 
     })
     await req.user.save()
-    res.send({message:"user log out"});
+    res.status(200).send({message:"user log out"});
   } catch (error) {
     res.status(400).send({
+      status:false,
       message:"unable to logout"
     });
   }

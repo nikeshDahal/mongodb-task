@@ -16,7 +16,8 @@ const createPost = async(req,res)=>{
         return res.status(200).send({ post});
       } catch (error) {
         res.status(400).send({
-           error_message:error
+            status:false,
+           message:"failed to create post"
         });
       }
 }
@@ -29,7 +30,8 @@ const listAllPost= async(req,res)=>{
         return res.status(200).send({posts});
     } catch (error) {
         return res.status(400).send({
-            error_message:{message:"failed to fetch posts"}
+            status:false,
+            message:"failed to fetch posts"
          });
     }
 }
@@ -40,10 +42,10 @@ const postNearMe= async(req,res)=>{
         const posts = await Post.listAllPostsNearMe(req.user.location.coordinates);
         return res.status(200).send({posts});
     } catch (error) {
-        console.log(error)
-        // return res.status(400).send({
-        //     error_message:{message:"failed to fetch posts"}
-        //  });
+        return res.status(400).send({
+            status:false,
+            message:"failed to fetch posts"
+         });
     }
 }
 
